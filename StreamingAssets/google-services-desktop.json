@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "401824400015",
+    "firebase_url": "https://testmerge-b3975-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "testmerge-b3975",
+    "storage_bucket": "testmerge-b3975.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401824400015:android:c3babfbf66bc6d1faa26fa",
+        "android_client_info": {
+          "package_name": "com.mindateq.mergegame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ435R4f3ycGwhpCNXIYIhho9iIxi7IlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
