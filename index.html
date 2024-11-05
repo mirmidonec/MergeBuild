@@ -97,24 +97,25 @@
         loadingBar.style.display = "block";
 
         var script = document.createElement("script");
-        script.src = loaderUrl;
-        script.onload = () => {
-            createUnityInstance(canvas, config, (progress) => {
-                progressBarFull.style.width = 100 * progress + "%";
-            }).then((unityInstance) => {
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+              }).then((unityInstance) => {
+              	window.unityInstance = unityInstance;
+                
+                window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));	 
+
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
-                    unityInstance.SetFullscreen(1);
+                  unityInstance.SetFullscreen(1);
                 };
-                window.unityInstance = unityInstance; // Store instance for later use
-                // Example of sending a message to Unity
-                // unityInstance.SendMessage('GameObjectName', 'MethodName', 'Parameter');
-            }).catch((message) => {
+              }).catch((message) => {
                 alert(message);
-            });
-        };
+              });
+            };
 
-        document.body.appendChild(script);
+      document.body.appendChild(script);
     </script>
 </body>
 </html>
