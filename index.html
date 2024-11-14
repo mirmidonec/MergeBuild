@@ -115,9 +115,7 @@
                   unityInstance.SetFullscreen(1);
                 };
 
-                window.onbeforeunload = () => {
-                        window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-                };
+               
 
 
               }).catch((message) => {
