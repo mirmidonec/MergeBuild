@@ -108,15 +108,16 @@
               }).then((unityInstance) => {
               	window.unityInstance = unityInstance;
                 
-                window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));
+                window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));	 
 
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
 
-               
-
+                window.onbeforeunload = function(e) {
+        unityInstance.SendMessage("SaveManager", "CreateUser");
+                };
 
               }).catch((message) => {
                 alert(message);
