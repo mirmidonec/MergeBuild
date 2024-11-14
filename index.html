@@ -98,6 +98,8 @@
 
         loadingBar.style.display = "block";
 
+        
+
         var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
@@ -112,6 +114,12 @@
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
+
+                window.onbeforeunload = () => {
+                        window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                };
+
+
               }).catch((message) => {
                 alert(message);
               });
