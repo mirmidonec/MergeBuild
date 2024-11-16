@@ -107,15 +107,12 @@
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
               	window.unityInstance = unityInstance;
-                 // Step 1: Call SetUser and store user data
             const userData = JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user);
             window.unityInstance.SendMessage('TelegramController', 'SetUser', userData);
 
-            // Step 2: Check if user exists in the database
-            const userName = JSON.parse(userData).username; // Assuming username is part of user data
+            const userName = JSON.parse(userData).username; 
             checkUserExists(userName).then(exists => {
                 if (!exists) {
-                    // Step 4: Call CreateUser if user does not exist
                     unityInstance.SendMessage("SaveManager", "CreateUser");
                 }
             });
@@ -132,8 +129,6 @@
 
       document.body.appendChild(script);
 
-
-       // Step 3: Function to check if the user exists in the database
     function checkUserExists(username) {
         return new Promise((resolve, reject) => {
             const usersRef = firebase.database().ref('Users');
