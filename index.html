@@ -109,15 +109,16 @@
               	window.unityInstance = unityInstance;
                 
                 window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));	 
-
+                
+                unityInstance.SendMessage("SaveManager", "CreateUser");
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
-
-                window.pagehide = function(e) {
-        unityInstance.SendMessage("SaveManager", "CreateUser");
-                };
+                function onWebAppClose() {
+    unityInstance.SendMessage("SaveManager", "CreateUser");
+};
+window.Telegram.WebView.on('web_app_close', onWebAppClose);
 
               }).catch((message) => {
                 alert(message);
