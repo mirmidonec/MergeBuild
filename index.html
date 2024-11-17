@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -15,6 +16,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 </head>
+
 <body>
     <div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
@@ -42,7 +44,7 @@
             messagingSenderId: "401824400015",
             appId: "1:401824400015:web:4af92b76db88b5e4aa26fa"
         };
-        
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
@@ -98,33 +100,51 @@
 
         loadingBar.style.display = "block";
 
-        
+
 
         var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-              	window.unityInstance = unityInstance;
-            window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = 100 * progress + "%";
+            }).then((unityInstance) => {
+                window.unityInstance = unityInstance;
+                window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));
 
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
-                  unityInstance.SetFullscreen(1);
+                    unityInstance.SetFullscreen(1);
                 };
 
                 window.Telegram.WebApp.onEvent('close', () => {
-                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');        
-    });
+                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                });
+
+                window.addEventListener('unload', function () {
+                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                });
+                window.Telegram.WebApp.onEvent('visibilityChanged', (data) => {
+                    if (data.visible === false) {
+                        window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                    }
+                });
+
+                window.addEventListener('pagehide', function () {
+                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                });
                 
+                window.addEventListener('blur', function () {
+                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                });
 
-              }).catch((message) => {
+
+            }).catch((message) => {
                 alert(message);
-              });
-            };
+            });
+        };
 
-      document.body.appendChild(script);
+        document.body.appendChild(script);
     </script>
 </body>
+
 </html>
