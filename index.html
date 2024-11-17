@@ -107,20 +107,17 @@
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
               	window.unityInstance = unityInstance;
-            const userData = JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user);
-            window.unityInstance.SendMessage('TelegramController', 'SetUser', userData);
-
-            const userName = JSON.parse(userData).username; 
-            checkUserExists(userName).then(exists => {
-                if (!exists) {
-                    unityInstance.SendMessage("SaveManager", "CreateUser");
-                }
-            });
+            window.unityInstance.SendMessage('TelegramController', 'SetUser', JSON.stringify(window.Telegram.WebApp.initDataUnsafe.user));
 
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
+
+                window.Telegram.WebApp.onEvent('close', () => {
+                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');        
+    });
+                
 
               }).catch((message) => {
                 alert(message);
@@ -128,17 +125,6 @@
             };
 
       document.body.appendChild(script);
-
-    function checkUserExists(username) {
-        return new Promise((resolve, reject) => {
-            const usersRef = firebase.database().ref('Users');
-            usersRef.orderByChild('Name').equalTo(username).once('value', snapshot => {
-                resolve(snapshot.exists());
-            }, error => {
-                reject(error);
-            });
-        });
-    }
     </script>
 </body>
 </html>
