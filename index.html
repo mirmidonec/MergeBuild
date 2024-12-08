@@ -116,11 +116,11 @@
                     unityInstance.SetFullscreen(1);
                 };
 
-                window.Telegram.WebApp.onEvent('close', () => {
-                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-                });
+                const tg = window.Telegram.WebApp;
 
-                window.addEventListener('beforeunload', function () {
+                window.Telegram.WebApp.BackButton.show();
+
+                window.Telegram.WebApp.BackButton.onClick(() => {
                     window.unityInstance.SendMessage('SaveManager', 'CreateUser');
                 });
 
