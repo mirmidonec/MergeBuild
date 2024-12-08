@@ -136,6 +136,9 @@
                 window.addEventListener('blur', function () {
                     window.unityInstance.SendMessage('SaveManager', 'CreateUser');
                 });
+                window.addEventListener('beforeunload', function () {
+            window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+        });
 
             }).catch((message) => {
                 alert(message);
