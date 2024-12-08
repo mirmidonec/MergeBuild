@@ -128,6 +128,14 @@
                         window.unityInstance.SendMessage('SaveManager', 'CreateUser');
                     }
                 });
+                document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+    }
+});
+window.addEventListener('beforeunload', function () {
+    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+});
 
                 window.addEventListener('pagehide', function () {
                     window.unityInstance.SendMessage('SaveManager', 'CreateUser');
