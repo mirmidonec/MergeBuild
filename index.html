@@ -122,6 +122,7 @@
 
                 window.Telegram.WebApp.BackButton.onClick(() => {
                     window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                    Telegram.WebApp.close();
                 });
 
             }).catch((message) => {
