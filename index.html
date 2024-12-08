@@ -120,25 +120,9 @@
                     window.unityInstance.SendMessage('SaveManager', 'CreateUser');
                 });
 
-                window.addEventListener('unload', function () {
-                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-                });
-                window.Telegram.WebApp.onEvent('visibilityChanged', (data) => {
-                    if (data.visible === false) {
-                        window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-                    }
-                });
-
-                window.addEventListener('pagehide', function () {
-                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-                });
-                
-                window.addEventListener('blur', function () {
-                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-                });
                 window.addEventListener('beforeunload', function () {
-            window.unityInstance.SendMessage('SaveManager', 'CreateUser');
-        });
+                    window.unityInstance.SendMessage('SaveManager', 'CreateUser');
+                });
 
             }).catch((message) => {
                 alert(message);
