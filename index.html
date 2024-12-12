@@ -48,6 +48,24 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
+
+        const AdController = window.Adsgram.init({ blockId: "962" });
+        
+	  AdController.addEventListener('onSkip', () => {
+	  	window.unityInstance.SendMessage('EndGamePanel', 'ContinueGameAfterAds');	 
+
+	   });
+	  AdController.addEventListener('onError', () => {
+	  	window.unityInstance.SendMessage('EndGamePanel', 'ContinueGameAfterAds');	 
+
+	  });
+	  AdController.addEventListener('onBannerNotFound', () => {
+	  	window.unityInstance.SendMessage('EndGamePanel', 'ContinueGameAfterAds');	 
+
+	   });
+
+	  
+
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
         var loadingBar = document.querySelector("#unity-loading-bar");
